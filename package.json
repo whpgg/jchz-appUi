@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/whpgg/jchz-appUi/issues"
   },
-  "homepage": "https://github.com/whpgg/jchz-appUi#readme"
+  "homepage": "https://github.com/whpgg/jchz-appUi#readme",
+  "dependencies": {
+    "vue": "^2.6.10"
+  }
 }
