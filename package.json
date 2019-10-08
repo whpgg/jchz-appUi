@@ -1,0 +1,19 @@
+{
+  "name": "jchzui",
+  "version": "1.0.0",
+  "description": "jc框架",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whpgg/jchz-appUi.git"
+  },
+  "author": "jc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/whpgg/jchz-appUi/issues"
+  },
+  "homepage": "https://github.com/whpgg/jchz-appUi#readme"
+}
