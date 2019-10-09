@@ -37,12 +37,12 @@
     </head>
     <body>
         <div id="app">
-            <g-button>你好</g-button>
-            <g-button icon="setting">你好</g-button>
-            <g-button icon="setting" icon-position="right">你好</g-button>
+            <g-button :loading="loading1" @click="loading1=!loading1">你好</g-button>
+            <g-button :loading="true" icon="setting">你好</g-button>
+            <g-button :loading="true" icon="setting" icon-position="right">你好</g-button>
             <g-icon name="downLoad"></g-icon>
         </div>
         <script src="./src/app.js"></script>
-        <script src="//at.alicdn.com/t/font_1448559_yn7giyo68nm.js"></script>
+        <script src="//at.alicdn.com/t/font_1448559_932l69a2xnl.js"></script>
     </body>
 </html>
