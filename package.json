@@ -4,8 +4,10 @@
   "description": "jc框架",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel index.html"
+    "dev-test": "parcel watch test/* --no-cache & karma start",
+    "test": "parcel build test/* --no-minify && karma start --single-run",
+    "start": "parcel index.html",
+    "clean": "rm -rf .cache; rm -rf dist/*"
   },
   "repository": {
     "type": "git",
