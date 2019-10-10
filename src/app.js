@@ -11,10 +11,14 @@ new Vue({
         loading1: true
     }
 });
-import chai from 'chai';
 
-const expect = chai.expect;
 //测试
+
+import chai from 'chai';
+import spies from 'chai-spies';
+chai.use(spies);
+const expect = chai.expect;
+
 {
     const constructor = Vue.extend(Button);
     const button = new constructor({
@@ -87,8 +91,8 @@ const expect = chai.expect;
         }
     });
     gButton.$mount();
-    gButton.$on('click',function(){
-        console.log(1)
-    })
+    let spy = chai.spy(function (){})
+    gButton.$on('click',spy);
     gButton.$el.click();
+    expect(spy).to.have.been.called()
 }
