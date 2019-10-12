@@ -12,10 +12,10 @@ describe('Input', () => {
 
     describe('props', () => {
         const Constructor = Vue.extend(Input);
-        let vm
-        afterEach(()=>{
-            vm.$destroy()
-        })
+        let vm;
+        afterEach(() => {
+            vm.$destroy();
+        });
         it('接受value', () => {
             vm = new Constructor({
                 propsData: {
@@ -55,47 +55,22 @@ describe('Input', () => {
             expect(errorMessage.innerText).to.equal('error');
         });
     });
-    describe('事件',()=>{
+    describe('事件', () => {
         const Constructor = Vue.extend(Input);
-        let vm
-        afterEach(()=>{
-            vm.$destroy()
-        })
-        it('支持change 事件',()=>{
-            vm = new Constructor({}).$mount();
-            const callback = sinon.fake();
-            vm.$on('change',callback)
-            let event = new Event('change');
-            let inputElement = vm.$el.querySelector('input');
-            inputElement.dispatchEvent(event);
-            expect(callback).to.have.been.calledWith(event)
-        })
-        it('支持input 事件',()=>{
-            vm = new Constructor({}).$mount();
-            const callback = sinon.fake();
-            vm.$on('input',callback)
-            let event = new Event('input');
-            let inputElement = vm.$el.querySelector('input');
-            inputElement.dispatchEvent(event);
-            expect(callback).to.have.been.calledWith(event)
-        })
-        it('支持focus 事件',()=>{
-            vm = new Constructor({}).$mount();
-            const callback = sinon.fake();
-            vm.$on('focus',callback)
-            let event = new Event('focus');
-            let inputElement = vm.$el.querySelector('input');
-            inputElement.dispatchEvent(event);
-            expect(callback).to.have.been.calledWith(event)
-        })
-        it('支持blur 事件',()=>{
-            vm = new Constructor({}).$mount();
-            const callback = sinon.fake();
-            vm.$on('blur',callback)
-            let event = new Event('blur');
-            let inputElement = vm.$el.querySelector('input');
-            inputElement.dispatchEvent(event);
-            expect(callback).to.have.been.calledWith(event)
-        })
-    })
+        let vm;
+        afterEach(() => {
+            vm.$destroy();
+        });
+        it('支持change、input、focus、blur 事件', () => {
+            ['change', 'input', 'focus', 'blur'].forEach(eventName => {
+                vm = new Constructor({}).$mount();
+                const callback = sinon.fake();
+                vm.$on(eventName, callback);
+                let event = new Event(eventName);
+                let inputElement = vm.$el.querySelector('input');
+                inputElement.dispatchEvent(event);
+                expect(callback).to.have.been.calledWith(event);
+            });
+        });
+    });
 });
