@@ -28,18 +28,36 @@
                 font-size: var(--font-size);
             }
         </style>
+        <style>
+            .box {
+                margin: 20px;
+            }
+        </style>
     </head>
     <body>
         <div id="app">
-            <g-button :loading="loading1" @click="loading1=!loading1">你好</g-button>
-            <g-button :loading="true" icon="setting">你好</g-button>
-            <g-button :loading="true" icon="setting" icon-position="right">你好</g-button>
-            <g-icon name="downLoad"></g-icon>
-            <g-button-group>
-                <g-button icon="left">后退</g-button>
-                <g-button icon="right" icon-position="right">前进</g-button>
-            </g-button-group>
-            <div id="test"></div>
+            <div class="box">
+                <g-input value="你好" disabled></g-input>
+                <g-input value="jc" readonly></g-input>
+                <g-input value="jc"></g-input>
+            </div>
+            <div class="box">
+                <g-input value="jc" error="姓名不能少于两个字"></g-input>
+            </div>
+            <div class="box">
+                <g-button :loading="loading1" @click="loading1=!loading1"
+                    >你好</g-button
+                >
+                <g-button :loading="true" icon="setting">你好</g-button>
+                <g-button :loading="true" icon="setting" icon-position="right"
+                    >你好</g-button
+                >
+                <g-icon name="downLoad"></g-icon>
+                <g-button-group>
+                    <g-button icon="left">后退</g-button>
+                    <g-button icon="right" icon-position="right">前进</g-button>
+                </g-button-group>
+            </div>
         </div>
         <script src="./src/app.js"></script>
     </body>
