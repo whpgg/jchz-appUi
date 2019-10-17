@@ -22,21 +22,30 @@
                 --border-color-hover: #666666;
             }
             #app {
-                margin: 20px;
             }
             body {
                 font-size: var(--font-size);
             }
         </style>
         <style>
-            .box {
-                margin: 20px;
+            .demo {
+                background: #dddddd;
+                border: 1px solid #666666;
+                min-height: 100px;
             }
         </style>
     </head>
     <body>
         <div id="app">
-            <g-row>
+            <g-layout style="height: 100vh;">
+                <g-header class="demo">header</g-header>
+                <g-layout>
+                    <g-sider class="demo">sider</g-sider>
+                    <g-content class="demo">centent</g-content>
+                </g-layout>
+                <g-footer class="demo">footer</g-footer>
+            </g-layout>
+            <!-- <g-row>
                 <g-col style="height: 12px;" span="2" :pc="{span:12}">1</g-col>
                 <g-col span="22" :pc="{span:12}">2</g-col>
             </g-row>
@@ -70,7 +79,7 @@
                     <g-button icon="left">后退</g-button>
                     <g-button icon="right" icon-position="right">前进</g-button>
                 </g-button-group>
-            </div>
+            </div> -->
         </div>
         <script src="./src/app.js"></script>
     </body>
