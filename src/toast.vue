@@ -2,6 +2,7 @@
     <div
         class="toast"
         ref="wrapper"
+        :class="toastClasse"
     >
         <div class="message">
             <slot v-if="!enableHtml"></slot>
@@ -47,6 +48,18 @@ export default {
         enableHtml: {
             type: Boolean,
             default: false
+        },
+        positon:{
+            type: String,
+            default: 'top',
+            validator(value){
+                return ['top','middle','bottom'].indexOf(value) >= 0
+            }
+        }
+    },
+    computed:{
+        toastClasse(){
+            return {[`position-${this.positon}`]:true}
         }
     },
     mounted() {
@@ -95,9 +108,7 @@ $toast-bg: rgba(0, 0, 0, 0.75);
     position: fixed;
     color: #ffffff;
     padding: 0 16px;
-    top: 0;
     left: 50%;
-    transform: translate(-50%);
     display: flex;
     align-items: center;
     border-radius: 4px;
@@ -114,6 +125,18 @@ $toast-bg: rgba(0, 0, 0, 0.75);
         height: 100%;
         border-left: 1px solid #666;
         margin-left: 16px;
+    }
+    &.position-top{
+        top: 0;
+        transform: translateX(-50%)
+    }
+    &.position-bottom{
+        bottom: 0;
+        transform: translateX(-50%)
+    }
+    &.position-middle{
+        top: 50%;
+        transform: translate(-50%,-50%)
     }
 }
 </style>
