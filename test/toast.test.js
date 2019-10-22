@@ -10,9 +10,9 @@ describe('Toast', () => {
         expect(Toast).to.be.ok;
     });
 
-    describe('props', function (done){
+    describe('props', function(done) {
         this.timeout(15000);
-        it('接受 autoclose',()=>{
+        it('接受 autoclose', () => {
             let div = document.createElement('div');
             document.body.appendChild(div);
             const Constructor = Vue.extend(Toast);
@@ -21,17 +21,17 @@ describe('Toast', () => {
                     autoClose: 1
                 }
             }).$mount(div);
-            vm.$on('close',()=>{
-                expect(document.body.contains(vm.$el)).to.eq(false)
-                done()
-            })
-        })
-        it('接受 closeButton', ()=>{
+            vm.$on('close', () => {
+                expect(document.body.contains(vm.$el)).to.eq(false);
+                done();
+            });
+        });
+        it('接受 closeButton', (done) => {
             const callback = sinon.fake();
             const Constructor = Vue.extend(Toast);
             const vm = new Constructor({
                 propsData: {
-                    closeButton:{
+                    closeButton: {
                         text: '关闭吧',
                         callback
                     }
@@ -39,31 +39,32 @@ describe('Toast', () => {
             }).$mount();
             let closeButton = vm.$el.querySelector('.close');
             expect(closeButton.textContent.trim()).to.eq('关闭吧');
-            closeButton.click();
-            expect(callback).to.have.been.called
-        })
-        it('接受 enableHtml', ()=>{
+            setTimeout(() => {
+                closeButton.click();
+                expect(callback).to.have.been.called;
+                done();
+            }, 200);
+        });
+        it('接受 enableHtml', () => {
             const Constructor = Vue.extend(Toast);
             const vm = new Constructor({
                 propsData: {
                     enableHtml: true
                 }
-            })
+            });
             vm.$slots.default = ['<strong id = "test">hi</strong>'];
-            vm.$mount()
+            vm.$mount();
             let strong = vm.$el.querySelector('#test');
-            expect(strong).to.exist
-            
-        })
-        it('接受 position', ()=>{
+            expect(strong).to.exist;
+        });
+        it('接受 position', () => {
             const Constructor = Vue.extend(Toast);
             const vm = new Constructor({
                 propsData: {
                     positon: 'bottom'
                 }
-            }).$mount()
-            expect(vm.$el.classList.contains('position-bottom')).to.eq(true)
-            
-        })
-    })
+            }).$mount();
+            expect(vm.$el.classList.contains('position-bottom')).to.eq(true);
+        });
+    });
 });
