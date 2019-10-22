@@ -55,7 +55,7 @@ describe('Toast', () => {
             expect(strong).to.exist
             
         })
-        it('接受 enableHtml', ()=>{
+        it('接受 position', ()=>{
             const Constructor = Vue.extend(Toast);
             const vm = new Constructor({
                 propsData: {
