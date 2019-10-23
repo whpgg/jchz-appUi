@@ -28,7 +28,7 @@ describe('Input', () => {
         it('接受disabled', () => {
             vm = new Constructor({
                 propsData: {
-                    disabled: 'true'
+                    disabled: true
                 }
             }).$mount();
             const inputElement = vm.$el.querySelector('input');
@@ -37,7 +37,7 @@ describe('Input', () => {
         it('接受readonly', () => {
             vm = new Constructor({
                 propsData: {
-                    readonly: 'true'
+                    readonly: true
                 }
             }).$mount();
             const inputElement = vm.$el.querySelector('input');

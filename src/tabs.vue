@@ -31,6 +31,7 @@ export default {
         }
     },
     mounted (){
+        if(this.$children.length === 0 ) console.warn('子组件只能是tabs-nav 和 tabsbody')
         this.$children.forEach((vm)=>{
             if(vm.$options.name === 'jcTabsNav'){
                 vm.$children.forEach((item)=>{
