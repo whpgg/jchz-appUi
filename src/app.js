@@ -43,5 +43,10 @@ new Vue({
         selectedTab: 'taiwan'
     },
     mounted() {},
-    methods: {}
+    methods: {
+        yyy(){
+            debugger
+            console.log('yyy')
+        }
+    }
 });
