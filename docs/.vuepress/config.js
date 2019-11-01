@@ -1,4 +1,5 @@
 module.exports = {
+    base:'/jchz-appUi/',
     title: 'jcUI',
     description: '一个公司ui框架基础架子',
     themeConfig: {
