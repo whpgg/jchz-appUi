@@ -1,7 +1,13 @@
 <template>
-    <div class="tabs-nav">
+    <div
+        class="tabs-nav"
+        ref="head"
+    >
         <slot></slot>
-        <div class="line" ref="line"></div>
+        <div
+            class="line"
+            ref="line"
+        ></div>
         <div class="actionsWrapper">
             <slot name="actions"></slot>
         </div>
@@ -11,12 +17,18 @@
 export default {
     name: "jcTabsNav",
     inject: ["eventBus"],
-    mounted (){
-        this.eventBus.$on('update:selected',(item, vm)=>{
-            let {width,height,top,left} = vm.$el.getBoundingClientRect();
+    mounted() {
+        this.eventBus.$on("update:selected", (item, vm) => {
+            this.updateLinePosition(vm);
+        });
+    },
+    methods: {
+        updateLinePosition(selectedVm) {
+            let { width, left } = selectedVm.$el.getBoundingClientRect();
+            let { left: left2 } = this.$refs.head.getBoundingClientRect();
             this.$refs.line.style.width = `${width}px`;
-            this.$refs.line.style.transform = `translateX(${left}px)`;
-        })
+            this.$refs.line.style.left = `${left - left2}px`;
+        }
     }
 };
 </script>
@@ -31,13 +43,13 @@ $border-color: #dddddd;
     align-items: center;
     position: relative;
     border-bottom: 1px solid $border-color;
-    > .line{
+    > .line {
         position: absolute;
         bottom: 0;
         border-bottom: 3px solid $blue;
         transition: all 250ms;
     }
-    > .actionsWrapper{
+    > .actionsWrapper {
         margin-left: auto;
         display: flex;
         align-items: center;

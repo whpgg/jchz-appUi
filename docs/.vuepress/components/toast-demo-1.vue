@@ -18,7 +18,7 @@
   </div>
 </template>
 <style>
-  .gulu-toast {
+  .jc-toast {
     z-index: 30 !important;
   }
 </style>
@@ -38,7 +38,7 @@
       return {
         content: `
 <style>
-.gulu-toast {
+.jc-toast {
     z-index: 30;
 }
 </style>
