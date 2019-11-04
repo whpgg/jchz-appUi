@@ -8,7 +8,7 @@ module.exports = {
                 title: '入门',
                 children: ['/install/', '/getStarted/']
             },
-            { title: '组件', children: ['/components/button','/components/grid','/components/layout','/components/input','/components/tabs','/components/toast'] }
+            { title: '组件', children: ['/components/button','/components/grid','/components/layout','/components/input','/components/tabs','/components/toast','/components/popover'] }
         ]
     }
 };
