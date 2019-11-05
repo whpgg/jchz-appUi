@@ -1,21 +1,26 @@
 <template>
-    <div class="cascader">
+    <div class="cascader" :style="{height:height}">
         <div class="left">
             <div class="label" v-for="item in items" @click="leftSelected = item">
                 {{item.name}}
+                <icon class="icon" v-if="item.children" name="right"></icon>
             </div>
         </div>
         <div class="right" v-if="rightItems">
-            <cascader-item :items="rightItems"></cascader-item>
+            <cascader-item :items="rightItems" :height= "height"></cascader-item>
         </div>
     </div>
 </template>
 <script>
+import icon from './icon'
 export default {
     name:'cascader-item',
     props:{
         items:{
             type: Array
+        },
+        height:{
+            type: String
         }
     },
     data(){
@@ -31,19 +36,33 @@ export default {
                 return null
             }
         }
-    }
+    },
+    components:{icon}
 }
 </script>
 <style lang="scss" scoped>
+@import 'var';
 .cascader{
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
+    height: 100%;
     .left{
-        border: 1px solid red;
+        height: 100%;
+        padding: .3em 0;
     }
     .right {
-        margin-top: -1px;
+        border-left: 1px solid $border-color-light;
+        height: 100%;
+    }
+    .label{
+        padding: .3em 1em;
+        display: flex;
+        align-items: center;
+        .icon{
+            margin-left: 1em;
+            fill: grey;
+        }
     }
 }
 </style>
