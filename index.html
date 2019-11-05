@@ -29,15 +29,8 @@
         </style>
     </head>
     <body>
-        <div id="app">
-            <div style="margin:50px" @click="yyy">
-                <g-popover>
-                    <template slot="content">
-                        <div>popover</div>
-                    </template>
-                    <button>点我</button>
-                </g-popover>
-            </div>
+        <div id="app" style="padding: 100px;">
+            <g-cascader :source="source"></g-cascader>
         </div>
         <script src="./src/app.js"></script>
     </body>
