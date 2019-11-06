@@ -1,6 +1,11 @@
 <template>
   <div>
-    <g-cascader :source="source"></g-cascader>
+    {{ selected }}
+    <g-cascader
+      :source="source"
+      :selected="selected"
+      @update:selected="selected = $event"
+    ></g-cascader>
   </div>
 </template>
 <script>
@@ -9,9 +14,10 @@ export default {
   name: "demo",
   data() {
     return {
+      selected: [],
       source: [
         {
-          name: "浙姜",
+          name: "浙江",
           children: [
             {
               name: "杭州",
