@@ -11,7 +11,7 @@ export default {
     return {
       source: [
         {
-          name: "浙江",
+          name: "浙姜",
           children: [
             {
               name: "杭州",
