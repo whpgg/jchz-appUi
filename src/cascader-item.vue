@@ -51,9 +51,19 @@ export default {
   },
   computed: {
     rightItems() {
-      let currentSelected = this.selected[this.level];
-      if (currentSelected && currentSelected.children) {
-        return currentSelected.children;
+      if (this.selected[this.level]) {
+        let selected = this.items.filter(
+          item => item.name === this.selected[this.level].name
+        );
+        if (
+          selected &&
+          selected[0].children &&
+          selected[0].children.length > 0
+        ) {
+          return selected[0].children;
+        } else {
+          return null;
+        }
       } else {
         return null;
       }
@@ -63,6 +73,7 @@ export default {
     onClickLabel(item) {
       let copy = JSON.parse(JSON.stringify(this.selected));
       copy[this.level] = item;
+      copy.splice(this.level + 1);
       this.$emit("update:selected", copy);
     },
     onUpdateSelected(newSelected) {
@@ -81,7 +92,7 @@ export default {
   height: 100%;
   .left {
     height: 100%;
-    padding: 0.3em 0;
+    overflow: auto;
   }
   .right {
     border-left: 1px solid $border-color-light;
