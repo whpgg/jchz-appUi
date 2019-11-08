@@ -87,7 +87,9 @@ export default {
         toUpdate.children = result;
         this.$emit("update:source", copy);
       };
-      this.loadData(lastItem, uodateSource);
+      if (!lastItem.isLeaf) {
+        this.loadData(lastItem, uodateSource);
+      }
     }
   },
   components: { cascaderItem }
@@ -97,6 +99,7 @@ export default {
 @import "var";
 .cascader {
   position: relative;
+  height: 34px;
   .trigger {
     border: 1px solid $border-color;
     border-radius: $border-radius;
