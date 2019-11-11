@@ -1,10 +1,6 @@
 <template>
   <div style="padding:10px">
-    <g-cascader
-      :source.sync="source"
-      :selected.sync="selected"
-      :load-data="loadData"
-    ></g-cascader>
+    <g-cascader :source.sync="source" :selected.sync="selected"></g-cascader>
   </div>
 </template>
 <script>
@@ -32,9 +28,30 @@ export default {
     };
   },
   created() {
-    ajax(0).then(result => {
-      this.source = result;
-    });
+    this.source = [
+      {
+        name: "浙江",
+        children: [
+          {
+            name: "杭州",
+            children: [{ name: "上城" }, { name: "下城" }, { name: "江干" }]
+          },
+          {
+            name: "嘉兴",
+            children: [{ name: "南湖" }, { name: "秀杰" }, { name: "嘉善" }]
+          }
+        ]
+      },
+      {
+        name: "福建",
+        children: [
+          {
+            name: "福州",
+            children: [{ name: "鼓楼" }, { name: "台江" }, { name: "仓山" }]
+          }
+        ]
+      }
+    ];
   },
   methods: {
     loadData(item, updateSource) {

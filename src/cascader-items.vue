@@ -1,5 +1,5 @@
 <template>
-  <div class="cascader" :style="{ height: height }">
+  <div class="cascaderItem" :style="{ height: height }">
     <div class="left">
       <div
         class="label"
@@ -7,27 +7,41 @@
         :key="item.name"
         @click="onClickLabel(item)"
       >
-        <span class="name">
-          {{ item.name }}
+        <span class="name">{{ item.name }}</span>
+        <span class="icons">
+          <template v-if="item.name === loadingItem.name">
+            <icon class="loading" name="Loading"></icon>
+          </template>
+          <template v-else>
+            <icon
+              class="next"
+              v-if="rightArrowVisible(item)"
+              name="right"
+            ></icon>
+          </template>
         </span>
-        <icon class="icon" v-if="!item.isLeaf" name="right"></icon>
       </div>
     </div>
     <div class="right" v-if="rightItems">
-      <cascader-item
+      <cascader-items
+        ref="right"
         :items="rightItems"
         :height="height"
+        :loading-item="loadingItem"
+        :load-data="loadData"
         :level="level + 1"
         :selected="selected"
         @update:selected="onUpdateSelected"
-      ></cascader-item>
+      ></cascader-items>
     </div>
   </div>
 </template>
+
 <script>
-import icon from "./icon";
+import Icon from "./icon";
 export default {
-  name: "cascader-item",
+  name: "cascaderItems",
+  components: { Icon },
   props: {
     items: {
       type: Array
@@ -35,21 +49,21 @@ export default {
     height: {
       type: String
     },
+    loadingItem: {
+      type: Object,
+      default: () => ({})
+    },
     selected: {
       type: Array,
-      default: () => {
-        return [];
-      }
+      default: () => []
+    },
+    loadData: {
+      type: Function
     },
     level: {
       type: Number,
       default: 0
     }
-  },
-  data() {
-    return {
-      leftSelected: null
-    };
   },
   computed: {
     rightItems() {
@@ -71,39 +85,46 @@ export default {
       }
     }
   },
+  mounted() {},
   methods: {
+    rightArrowVisible(item) {
+      return this.loadData ? !item.isLeaf : item.children;
+    },
     onClickLabel(item) {
       let copy = JSON.parse(JSON.stringify(this.selected));
       copy[this.level] = item;
-      copy.splice(this.level + 1);
+      copy.splice(this.level + 1); // 一句话
       this.$emit("update:selected", copy);
     },
     onUpdateSelected(newSelected) {
       this.$emit("update:selected", newSelected);
     }
-  },
-  components: { icon }
+  }
 };
 </script>
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 @import "var";
-.cascader {
+.cascaderItem {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  height: 100%;
+  height: 100px;
   .left {
     height: 100%;
+    padding: 0.3em 0;
     overflow: auto;
   }
   .right {
-    border-left: 1px solid $border-color-light;
     height: 100%;
+    border-left: 1px solid $border-color-light;
   }
   .label {
     padding: 0.5em 1em;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    white-space: nowrap;
     &:hover {
       background: $grey;
     }
@@ -111,9 +132,14 @@ export default {
       margin-right: 1em;
       user-select: none;
     }
-    .icon {
+    .icons {
       margin-left: auto;
-      fill: grey;
+      .next {
+        transform: scale(0.5);
+      }
+      .loading {
+        animation: spin 2s infinite linear;
+      }
     }
   }
 }
