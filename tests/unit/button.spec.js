@@ -6,7 +6,7 @@ import Vue from "vue";
 chai.use(sinonChai);
 import { mount } from "@vue/test-utils";
 
-describe("HelloWorld.vue", () => {
+describe("button", () => {
   it("存在.", () => {
     expect(Button).to.be.ok;
   });
