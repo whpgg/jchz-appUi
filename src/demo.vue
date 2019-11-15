@@ -1,68 +1,49 @@
 <template>
-  <div style="padding:10px">
-    <g-cascader :source.sync="source" :selected.sync="selected"></g-cascader>
+  <div class="wrapper">
+    <g-slides :selected.sync="selected">
+      <g-slides-item name="spac">
+        <div class="box">1</div>
+      </g-slides-item>
+      <g-slides-item name="2">
+        <div class="box">2</div>
+      </g-slides-item>
+      <g-slides-item name="3">
+        <div class="box">3</div>
+      </g-slides-item>
+    </g-slides>
   </div>
 </template>
 <script>
-import Cascader from "./cascader";
-import db from "../test/db";
-function ajax(parentid = "0") {
-  return new Promise(success => {
-    let result = db.filter(item => item.parent_id == parentid);
-    result.forEach(node => {
-      if (db.filter(item => item.parent_id == node.id).length > 0) {
-        node.isLeaf = false;
-      } else {
-        node.isLeaf = true;
-      }
-    });
-    success(result);
-  });
-}
+import GSlides from "./slides";
+import GSlidesItem from "./slides-item";
 export default {
   name: "demo",
   data() {
     return {
-      selected: [],
-      source: []
+      selected: undefined
     };
   },
-  created() {
-    this.source = [
-      {
-        name: "浙江",
-        children: [
-          {
-            name: "杭州",
-            children: [{ name: "上城" }, { name: "下城" }, { name: "江干" }]
-          },
-          {
-            name: "嘉兴",
-            children: [{ name: "南湖" }, { name: "秀杰" }, { name: "嘉善" }]
-          }
-        ]
-      },
-      {
-        name: "福建",
-        children: [
-          {
-            name: "福州",
-            children: [{ name: "鼓楼" }, { name: "台江" }, { name: "仓山" }]
-          }
-        ]
-      }
-    ];
-  },
-  methods: {
-    loadData(item, updateSource) {
-      let id = item.id;
-      ajax(id).then(result => {
-        updateSource(result);
-      });
-    }
-  },
+  created() {},
+  methods: {},
   components: {
-    "g-cascader": Cascader
+    GSlides,
+    GSlidesItem
   }
 };
 </script>
+<style lang="scss" scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.wrapper {
+  margin: 20px;
+}
+.box {
+  width: 100%;
+  height: 150px;
+  background: #ddd;
+  border: 1px solid red;
+}
+</style>
