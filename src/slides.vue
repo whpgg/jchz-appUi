@@ -5,6 +5,16 @@
         <slot></slot>
       </div>
     </div>
+    <div class="g-slides-dots">
+      <span
+        @click="select(index - 1)"
+        v-for="index in childrenLength"
+        :key="index"
+        :class="{ active: selectedIndex === index - 1 }"
+      >
+        {{ index }}
+      </span>
+    </div>
   </div>
 </template>
 <script>
@@ -19,22 +29,37 @@ export default {
       default: true
     }
   },
+  data() {
+    return {
+      childrenLength: 0
+    };
+  },
+  computed: {
+    selectedIndex() {
+      return this.names.indexOf(this.selected) > 0
+        ? this.names.indexOf(this.selected)
+        : 0;
+    },
+    names() {
+      return this.$children.map(vm => vm.name);
+    }
+  },
   mounted() {
     this.updateChildren(this.getSelected());
     this.playAutomatically();
+    this.childrenLength = this.$children.length;
   },
   updated() {
     this.updateChildren(this.getSelected());
   },
   methods: {
     playAutomatically() {
-      const names = this.$children.map(vm => vm.name);
-      let index = names.indexOf(this.getSelected());
+      let index = this.names.indexOf(this.getSelected());
       let run = () => {
-        if (index === names.length) {
+        if (index === this.names.length) {
           index = 0;
         }
-        this.$emit("update:selected", names[++index]);
+        this.$emit("update:selected", this.names[++index]);
         setTimeout(run, 3000);
       };
       setTimeout(run, 3000);
@@ -42,11 +67,13 @@ export default {
     updateChildren(selected) {
       this.$children.forEach(vm => {
         vm.selected = selected;
-        const names = this.$children.map(vm => vm.name);
-        let newIndex = names.indexOf(selected);
-        let oldIndex = names.indexOf(vm.name);
+        let newIndex = this.names.indexOf(selected);
+        let oldIndex = this.names.indexOf(vm.name);
         vm.reverse = newIndex > oldIndex ? false : true;
       });
+    },
+    select(index) {
+      this.$emit("update:selected", this.names[index]);
     },
     getSelected() {
       return this.selected || this.$children[0].name;
@@ -61,6 +88,11 @@ export default {
   }
   &-wrapper {
     position: relative;
+  }
+  &-dots {
+    > .active {
+      border: 1px solid red;
+    }
   }
 }
 </style>
