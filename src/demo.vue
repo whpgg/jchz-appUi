@@ -20,7 +20,7 @@ export default {
   name: "demo",
   data() {
     return {
-      selected: undefined
+      selected: "spac"
     };
   },
   created() {},
@@ -44,6 +44,9 @@ export default {
   width: 100%;
   height: 150px;
   background: #ddd;
-  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
 }
 </style>

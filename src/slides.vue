@@ -1,5 +1,5 @@
 <template>
-  <div class="g-slides">
+  <div class="g-slides" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <div class="g-slides-window" ref="window">
       <div class="g-slides-wrapper">
         <slot></slot>
@@ -32,7 +32,8 @@ export default {
   data() {
     return {
       childrenLength: 0,
-      lastSelectedIndex: undefined
+      lastSelectedIndex: undefined,
+      timerId: undefined
     };
   },
   computed: {
@@ -55,25 +56,47 @@ export default {
   },
   methods: {
     playAutomatically() {
-      // let index = this.names.indexOf(this.getSelected());
-      // let run = () => {
-      //   if (index === this.names.length) {
-      //     index = 0;
-      //   }
-      //   this.select(++index);
-      //   setTimeout(run, 3000);
-      // };
-      // setTimeout(run, 3000);
+      if (this.timerId) return;
+      let index = this.names.indexOf(this.getSelected());
+      let run = () => {
+        if (index === this.names.length) {
+          index = 0;
+        }
+        this.select(++index);
+        this.timerId = setTimeout(run, 3000);
+      };
+      this.timerId = setTimeout(run, 3000);
+    },
+    onMouseEnter() {
+      this.pause();
+    },
+    onMouseLeave() {
+      this.playAutomatically();
+    },
+    pause() {
+      window.clearTimeout(this.timerId);
+      this.timerId = undefined;
     },
     updateChildren(selected) {
       this.$children.forEach(vm => {
-        if (this.lastSelectedIndex == undefined) {
-          vm.reverse = false;
-        } else {
-          vm.reverse =
-            this.selectedIndex > this.lastSelectedIndex ? false : true;
+        let reverse =
+          this.selectedIndex > this.lastSelectedIndex ? false : true;
+        if (this.timerId) {
+          if (
+            this.lastSelectedIndex == this.$children.length - 1 &&
+            this.selectedIndex == 0
+          ) {
+            reverse = false;
+          }
+          if (
+            this.lastSelectedIndex == 0 &&
+            this.selectedIndex == this.$children.length - 1
+          ) {
+            reverse = true;
+          }
         }
 
+        vm.reverse = reverse;
         this.$nextTick(() => {
           vm.selected = selected;
         });
@@ -98,8 +121,30 @@ export default {
     position: relative;
   }
   &-dots {
-    > .active {
-      border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 0;
+    > span {
+      width: 1.2em;
+      height: 1.2em;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background: #dddddd;
+      border-radius: 50%;
+      margin: 0 0.2em;
+      font-size: 12px;
+      &:hover {
+        cursor: pointer;
+      }
+      &.active {
+        background: black;
+        color: white;
+        &:hover {
+          cursor: default;
+        }
+      }
     }
   }
 }
