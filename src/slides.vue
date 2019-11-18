@@ -31,7 +31,8 @@ export default {
   },
   data() {
     return {
-      childrenLength: 0
+      childrenLength: 0,
+      lastSelectedIndex: undefined
     };
   },
   computed: {
@@ -54,25 +55,32 @@ export default {
   },
   methods: {
     playAutomatically() {
-      let index = this.names.indexOf(this.getSelected());
-      let run = () => {
-        if (index === this.names.length) {
-          index = 0;
-        }
-        this.$emit("update:selected", this.names[++index]);
-        setTimeout(run, 3000);
-      };
-      setTimeout(run, 3000);
+      // let index = this.names.indexOf(this.getSelected());
+      // let run = () => {
+      //   if (index === this.names.length) {
+      //     index = 0;
+      //   }
+      //   this.select(++index);
+      //   setTimeout(run, 3000);
+      // };
+      // setTimeout(run, 3000);
     },
     updateChildren(selected) {
       this.$children.forEach(vm => {
-        vm.selected = selected;
-        let newIndex = this.names.indexOf(selected);
-        let oldIndex = this.names.indexOf(vm.name);
-        vm.reverse = newIndex > oldIndex ? false : true;
+        if (this.lastSelectedIndex == undefined) {
+          vm.reverse = false;
+        } else {
+          vm.reverse =
+            this.selectedIndex > this.lastSelectedIndex ? false : true;
+        }
+
+        this.$nextTick(() => {
+          vm.selected = selected;
+        });
       });
     },
     select(index) {
+      this.lastSelectedIndex = this.selectedIndex;
       this.$emit("update:selected", this.names[index]);
     },
     getSelected() {

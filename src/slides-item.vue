@@ -41,13 +41,13 @@ export default {
 .slide-enter {
   transform: translateX(100%);
 }
-.slide-enter .reverse {
+.slide-enter.reverse {
   transform: translateX(-100%);
 }
 .slide-leave-to {
   transform: translateX(-100%);
 }
-.slide-leave-to .reverse {
+.slide-leave-to.reverse {
   transform: translateX(100%);
 }
 </style>
