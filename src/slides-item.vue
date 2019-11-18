@@ -1,12 +1,23 @@
 <template>
-  <transition name="slide">
-    <div class="g-slides-item" v-if="visible" :class="{ reverse }">
-      <slot></slot>
-    </div>
-  </transition>
+  <div>
+    <template v-if="animationEnabled">
+      <transition name="slide">
+        <div class="g-slides-item" v-if="visible" :class="{ reverse }">
+          <slot></slot>
+        </div>
+      </transition>
+    </template>
+    <template v-else>
+      <div class="g-slides-item" v-if="visible" :class="{ reverse }">
+        <slot></slot>
+      </div>
+    </template>
+  </div>
 </template>
+
 <script>
 export default {
+  name: "jcSlidesItem",
   props: {
     name: {
       type: String,
@@ -16,16 +27,21 @@ export default {
   data() {
     return {
       selected: undefined,
-      reverse: false
+      reverse: false,
+      animationEnabled: false
     };
+  },
+  updated() {
+    this.animationEnabled = true;
   },
   computed: {
     visible() {
-      return this.selected == this.name;
+      return this.selected === this.name;
     }
   }
 };
 </script>
+
 <style lang="scss" scoped>
 .slide-leave-active {
   position: absolute;
