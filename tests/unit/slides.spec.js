@@ -111,8 +111,8 @@ describe("Slides.vue", () => {
           <g-slides-item name="1">
             <div class="box1">1</div>
           </g-slides-item>
-          <g-slides-item name="2">
-            <div class="box2">2</div>
+          <g-slides-item name="4">
+            <div class="box2">4</div>
           </g-slides-item>
           <g-slides-item name="3">
             <div class="box3">3</div>
@@ -124,7 +124,7 @@ describe("Slides.vue", () => {
       }
     });
     setTimeout(() => {
-      expect(callback).to.have.been.calledWith("2");
+      expect(callback).to.have.been.calledWith("4");
       done();
     }, 21);
   });
